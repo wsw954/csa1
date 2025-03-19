@@ -1,8 +1,22 @@
-﻿\---api
-|   \---auth
-|   |   \---register
+﻿\---app
+|   \---api
+|   |   \---auth
+|   |   |   \---login
+|   |   |   |   |   route.js
+|   |   |   \---register
+|   |   |   |   |   route.js
+|   |   |   \---[...nextauth]
+|   |   |   |   |   route.js
+|   |   \---protected
 |   |   |   |   route.js
-\---app
+|   \---auth
+|   |   \---login
+|   |   |   |   page.js
+|   |   \---signup
+|   |   |   |   page.js
+|   \---buyer
+|   |   \---dashboard
+|   |   |   |   page.js
 |   |   favicon.ico
 |   |   globals.css
 |   |   layout.js
@@ -10,7 +24,10 @@
 \---config
 |   |   db.js
 \---models
+|   |   offer.js
+|   |   request.js
 |   |   user.js
+|   |   vehicle.js
 \---public
 |   |   file.svg
 |   |   globe.svg
@@ -19,6 +36,10 @@
 |   |   window.svg
 |   .env.local
 |   .gitignore
+|   eslint.config.mjs
+|   folder-structure.txt
+|   jsconfig.json
+|   next.config.mjs
 |   package-lock.json
 |   package.json
 |   postcss.config.mjs
