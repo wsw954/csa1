@@ -2,12 +2,16 @@
 "use client";
 import { useState } from "react";
 import { useRouter } from "next/navigation";
+import FormInput from "@/components/ui/FormInput";
+import FormSelect from "@/components/ui/FormSelect";
+import Button from "@/components/ui/Button";
+import Card from "@/components/ui/Card";
 
 export default function SignupPage() {
   const [form, setForm] = useState({
     email: "",
     password: "",
-    role: "buyer",
+    role: "",
     firstName: "",
     lastName: "",
     address: "",
@@ -26,7 +30,6 @@ export default function SignupPage() {
     e.preventDefault();
     const payload = { ...form };
 
-    // Convert brands to an array if dealer
     if (payload.role === "dealer") {
       payload.brands = payload.brands.split(",").map((brand) => brand.trim());
     }
@@ -40,149 +43,124 @@ export default function SignupPage() {
     const data = await res.json();
 
     if (res.ok) {
-      alert(data.message); // Success message
-
-      // Redirect only if the registered user is a buyer
-      if (payload.role === "buyer") {
-        router.push("/buyer/dashboard");
-      } else {
-        // Redirect dealer to a different page if needed
-        router.push("/dealer/dashboard");
-      }
+      alert(data.message);
+      router.push(
+        payload.role === "buyer" ? "/buyer/dashboard" : "/dealer/dashboard"
+      );
     } else {
-      alert(data.message); // Show error if registration fails
+      alert(data.message);
     }
   };
 
   return (
     <div className="flex flex-col items-center justify-center min-h-screen bg-gray-100">
-      <div className="bg-white p-8 rounded-lg shadow-lg w-full max-w-md">
+      <Card>
         <h2 className="text-2xl font-bold text-center mb-6">Sign Up</h2>
+
         <form onSubmit={handleSubmit} className="space-y-4">
-          <div className="flex flex-col">
-            <label className="text-sm font-medium">Email</label>
-            <input
-              type="email"
-              name="email"
-              placeholder="Email"
-              onChange={handleChange}
-              required
-              className="p-2 border rounded"
-            />
-          </div>
+          <FormSelect
+            label="Role"
+            name="role"
+            value={form.role}
+            onChange={handleChange}
+            options={[
+              { label: "Select role...", value: "" },
+              { label: "Buyer", value: "buyer" },
+              { label: "Dealer", value: "dealer" },
+            ]}
+            required
+          />
 
-          <div className="flex flex-col">
-            <label className="text-sm font-medium">Password</label>
-            <input
-              type="password"
-              name="password"
-              placeholder="Password"
-              onChange={handleChange}
-              required
-              className="p-2 border rounded"
-            />
-          </div>
-
-          <div className="flex flex-col">
-            <label className="text-sm font-medium">Role</label>
-            <select
-              name="role"
-              onChange={handleChange}
-              className="p-2 border rounded"
-            >
-              <option value="buyer">Buyer</option>
-              <option value="dealer">Dealer</option>
-            </select>
-          </div>
-
-          {form.role === "buyer" && (
+          {form.role && (
             <>
-              <div className="flex flex-col">
-                <label className="text-sm font-medium">First Name</label>
-                <input
-                  type="text"
-                  name="firstName"
-                  placeholder="First Name"
-                  onChange={handleChange}
-                  required
-                  className="p-2 border rounded"
-                />
-              </div>
-              <div className="flex flex-col">
-                <label className="text-sm font-medium">Last Name</label>
-                <input
-                  type="text"
-                  name="lastName"
-                  placeholder="Last Name"
-                  onChange={handleChange}
-                  required
-                  className="p-2 border rounded"
-                />
-              </div>
-              <div className="flex flex-col">
-                <label className="text-sm font-medium">Address</label>
-                <input
-                  type="text"
-                  name="address"
-                  placeholder="Address"
-                  onChange={handleChange}
-                  required
-                  className="p-2 border rounded"
-                />
-              </div>
-              <div className="flex flex-col">
-                <label className="text-sm font-medium">Phone</label>
-                <input
-                  type="text"
-                  name="phone"
-                  placeholder="Phone"
-                  onChange={handleChange}
-                  required
-                  className="p-2 border rounded"
-                />
-              </div>
+              <h3 className="text-lg font-semibold text-center">
+                Create {form.role === "buyer" ? "Buyer" : "Dealer"} Account
+              </h3>
+
+              <FormInput
+                label="Email"
+                name="email"
+                type="email"
+                value={form.email}
+                onChange={handleChange}
+                required
+              />
+              <FormInput
+                label="Password"
+                name="password"
+                type="password"
+                value={form.password}
+                onChange={handleChange}
+                required
+              />
+
+              <FormInput
+                label="First Name"
+                name="firstName"
+                value={form.firstName}
+                onChange={handleChange}
+                required
+              />
+              <FormInput
+                label="Last Name"
+                name="lastName"
+                value={form.lastName}
+                onChange={handleChange}
+                required
+              />
+              <FormInput
+                label="Phone"
+                name="phone"
+                value={form.phone}
+                onChange={handleChange}
+                required
+              />
+
+              {form.role === "buyer" && (
+                <>
+                  <FormInput
+                    label="Address"
+                    name="address"
+                    value={form.address}
+                    onChange={handleChange}
+                    required
+                  />
+                  <FormInput
+                    label="Credit Score (optional)"
+                    name="creditScore"
+                    type="number"
+                    value={form.creditScore || ""}
+                    onChange={handleChange}
+                    min="300"
+                    max="850"
+                  />
+                </>
+              )}
+
+              {form.role === "dealer" && (
+                <>
+                  <FormInput
+                    label="Dealership Address"
+                    name="dealershipAddress"
+                    value={form.dealershipAddress}
+                    onChange={handleChange}
+                    required
+                  />
+                  <FormInput
+                    label="Brands (comma-separated)"
+                    name="brands"
+                    value={form.brands}
+                    onChange={handleChange}
+                    required
+                  />
+                </>
+              )}
+
+              <Button type="submit">Register</Button>
             </>
           )}
-
-          {form.role === "dealer" && (
-            <>
-              <div className="flex flex-col">
-                <label className="text-sm font-medium">
-                  Dealership Address
-                </label>
-                <input
-                  type="text"
-                  name="dealershipAddress"
-                  placeholder="Dealership Address"
-                  onChange={handleChange}
-                  required
-                  className="p-2 border rounded"
-                />
-              </div>
-              <div className="flex flex-col">
-                <label className="text-sm font-medium">
-                  Brands (comma-separated)
-                </label>
-                <input
-                  type="text"
-                  name="brands"
-                  placeholder="Brands (comma-separated)"
-                  onChange={handleChange}
-                  required
-                  className="p-2 border rounded"
-                />
-              </div>
-            </>
-          )}
-
-          <button
-            type="submit"
-            className="w-full py-2 bg-blue-600 text-white rounded-lg hover:bg-blue-700 transition"
-          >
-            Register
-          </button>
         </form>
-      </div>
+      </Card>
     </div>
   );
 }

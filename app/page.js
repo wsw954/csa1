@@ -7,6 +7,10 @@ export default function HomePage() {
         build their dream vehicle and submit purchase requests, while dealers
         can respond with competitive offers.
       </p>
+      <div className="bg-yellow-100 p-4 text-center font-bold text-lg">
+        Tailwind is finally working 🎉
+      </div>
+
       <div className="flex space-x-4">
         <a
           href="/auth/signup"

@@ -17,10 +17,25 @@
 |   \---buyer
 |   |   \---dashboard
 |   |   |   |   page.js
+|   |   |   layout.js
+|   \---dealer
+|   |   \---dashboard
+|   |   |   |   page.js
+|   |   |   layout.js
 |   |   favicon.ico
 |   |   globals.css
 |   |   layout.js
 |   |   page.js
+\---components
+|   \---layouts
+|   |   |   DashboardLayout.js
+|   \---providers
+|   |   |   SessionProvider.js
+|   \---ui
+|   |   |   Button.js
+|   |   |   Card.js
+|   |   |   FormInput.js
+|   |   |   FormSelect.js
 \---config
 |   |   db.js
 \---models
@@ -42,5 +57,7 @@
 |   next.config.mjs
 |   package-lock.json
 |   package.json
+|   postcss.config.js
 |   postcss.config.mjs
 |   README.md
+|   tailwind.config.js

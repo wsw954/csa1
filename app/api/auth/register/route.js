@@ -32,12 +32,32 @@ export async function POST(req) {
         ...otherData,
       });
     } else {
-      newUser = new Dealer({
+      const dealerData = {
         email,
         password: hashedPassword,
         role,
+        dealershipAddress: otherData.dealershipAddress?.trim(),
+        brands: Array.isArray(otherData.brands) ? otherData.brands : [],
         ...otherData,
-      });
+      };
+
+      // Log payload for debugging
+      console.log("DEALER PAYLOAD", dealerData);
+
+      // Basic validation
+      if (
+        !otherData.firstName ||
+        !otherData.lastName ||
+        !otherData.phone ||
+        !dealerData.dealershipAddress
+      ) {
+        return NextResponse.json(
+          { message: "Missing required dealer fields" },
+          { status: 400 }
+        );
+      }
+
+      newUser = new Dealer(dealerData);
     }
 
     await newUser.save();
@@ -47,6 +67,7 @@ export async function POST(req) {
       { status: 201 }
     );
   } catch (error) {
+    console.log(error);
     return NextResponse.json(
       { message: "Something went wrong" },
       { status: 500 }
