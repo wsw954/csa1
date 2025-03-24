@@ -1,4 +1,11 @@
 ﻿\---app
+|   \---admin
+|   |   \---dashboard
+|   |   |   |   page.js
+|   |   \---manage
+|   |   |   |   page.js
+|   |   \---reports
+|   |   |   |   page.js
 |   \---api
 |   |   \---auth
 |   |   |   \---login
@@ -15,11 +22,31 @@
 |   |   \---signup
 |   |   |   |   page.js
 |   \---buyer
+|   |   \---build
+|   |   |   |   page.js
 |   |   \---dashboard
+|   |   |   |   page.js
+|   |   \---profile
+|   |   |   |   page.js
+|   |   \---requests
+|   |   |   \---[id]
 |   |   |   |   page.js
 |   |   |   layout.js
 |   \---dealer
+|   |   \---build
+|   |   |   |   page.js
 |   |   \---dashboard
+|   |   |   |   page.js
+|   |   \---offers
+|   |   |   \---[id]
+|   |   |   |   page.js
+|   |   \---profile
+|   |   |   |   page.js
+|   |   \---requests
+|   |   |   \---[id]
+|   |   |   |   \---offer
+|   |   |   |   page.js
+|   |   \---vehicles
 |   |   |   |   page.js
 |   |   |   layout.js
 |   |   favicon.ico
