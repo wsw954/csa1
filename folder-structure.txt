@@ -14,7 +14,23 @@
 |   |   |   |   |   route.js
 |   |   |   \---[...nextauth]
 |   |   |   |   |   route.js
+|   |   \---offer
+|   |   |   \---[id]
+|   |   |   |   |   route.js
+|   |   |   |   route.js
 |   |   \---protected
+|   |   |   |   route.js
+|   |   \---request
+|   |   |   \---[id]
+|   |   |   |   |   route.js
+|   |   |   |   route.js
+|   |   \---user
+|   |   |   \---[id]
+|   |   |   |   |   route.js
+|   |   |   |   route.js
+|   |   \---vehicle
+|   |   |   \---[id]
+|   |   |   |   |   route.js
 |   |   |   |   route.js
 |   \---auth
 |   |   \---login
@@ -22,33 +38,47 @@
 |   |   \---signup
 |   |   |   |   page.js
 |   \---buyer
-|   |   \---build
-|   |   |   |   page.js
 |   |   \---dashboard
 |   |   |   |   page.js
 |   |   \---profile
-|   |   |   |   page.js
-|   |   \---requests
-|   |   |   \---[id]
 |   |   |   |   page.js
 |   |   |   layout.js
 |   \---dealer
-|   |   \---build
-|   |   |   |   page.js
 |   |   \---dashboard
-|   |   |   |   page.js
-|   |   \---offers
-|   |   |   \---[id]
 |   |   |   |   page.js
 |   |   \---profile
 |   |   |   |   page.js
-|   |   \---requests
-|   |   |   \---[id]
-|   |   |   |   \---offer
-|   |   |   |   page.js
-|   |   \---vehicles
-|   |   |   |   page.js
 |   |   |   layout.js
+|   \---offer
+|   |   \---new
+|   |   |   |   page.js
+|   |   \---[id]
+|   |   |   \---edit
+|   |   |   |   |   page.js
+|   |   |   |   page.js
+|   |   |   page.js
+|   \---request
+|   |   \---new
+|   |   |   |   page.js
+|   |   \---[id]
+|   |   |   \---edit
+|   |   |   |   |   page.js
+|   |   |   |   page.js
+|   |   |   page.js
+|   \---user
+|   |   \---[id]
+|   |   |   \---edit
+|   |   |   |   |   page.js
+|   |   |   |   page.js
+|   |   |   page.js
+|   \---vehicle
+|   |   \---new
+|   |   |   |   page.js
+|   |   \---[id]
+|   |   |   \---edit
+|   |   |   |   |   page.js
+|   |   |   |   page.js
+|   |   |   page.js
 |   |   favicon.ico
 |   |   globals.css
 |   |   layout.js
