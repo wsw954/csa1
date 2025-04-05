@@ -1,11 +1,24 @@
-﻿export async function GET(request, { params }) {
-  return Response.json({ message: "GET /api/vehicle/\ - Fetch vehicle" });
+﻿//app/api/vehicle/[id]/route.js
+import { requireAuth } from "@/lib/auth/api-protect";
+import { NextResponse } from "next/server";
+
+export async function GET(req) {
+  const { status, session, body } = await requireAuth(req);
+  if (status !== 200) return NextResponse.json(body, { status });
+
+  return NextResponse.json({ message: "GET /api/vehicle/[id]" });
 }
 
-export async function PUT(request, { params }) {
-  return Response.json({ message: "PUT /api/vehicle/\ - Update vehicle" });
+export async function PUT(req) {
+  const { status, session, body } = await requireAuth(req);
+  if (status !== 200) return NextResponse.json(body, { status });
+
+  return NextResponse.json({ message: "PUT /api/vehicle/[id]" });
 }
 
-export async function DELETE(request, { params }) {
-  return Response.json({ message: "DELETE /api/vehicle/\ - Delete vehicle" });
+export async function DELETE(req) {
+  const { status, session, body } = await requireAuth(req);
+  if (status !== 200) return NextResponse.json(body, { status });
+
+  return NextResponse.json({ message: "DELETE /api/vehicle/[id]" });
 }

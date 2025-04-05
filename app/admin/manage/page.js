@@ -1,3 +1,8 @@
-﻿export default function Page() {
-  return <div>"app/admin/manage/page.js" (Coming Soon)</div>;
+﻿//app/admin/manage/page.js
+export default function AdminManagePage() {
+  return (
+    <div>
+      <h1>Manage Users & Records</h1>
+    </div>
+  );
 }

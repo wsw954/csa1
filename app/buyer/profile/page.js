@@ -1,3 +1,7 @@
-﻿export default function Page() {
-  return <div>"app/buyer/profile/page.js" (Coming Soon)</div>;
+﻿export default function BuyerProfilePage() {
+  return (
+    <div>
+      <h1>Buyer Profile</h1>
+    </div>
+  );
 }

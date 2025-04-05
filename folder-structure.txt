@@ -6,6 +6,7 @@
 |   |   |   |   page.js
 |   |   \---reports
 |   |   |   |   page.js
+|   |   |   layout.js
 |   \---api
 |   |   \---auth
 |   |   |   \---login
@@ -56,6 +57,7 @@
 |   |   |   \---edit
 |   |   |   |   |   page.js
 |   |   |   |   page.js
+|   |   |   layout.js
 |   |   |   page.js
 |   \---request
 |   |   \---new
@@ -64,6 +66,7 @@
 |   |   |   \---edit
 |   |   |   |   |   page.js
 |   |   |   |   page.js
+|   |   |   layout.js
 |   |   |   page.js
 |   \---user
 |   |   \---[id]
@@ -78,6 +81,7 @@
 |   |   |   \---edit
 |   |   |   |   |   page.js
 |   |   |   |   page.js
+|   |   |   layout.js
 |   |   |   page.js
 |   |   favicon.ico
 |   |   globals.css
@@ -95,6 +99,10 @@
 |   |   |   FormSelect.js
 \---config
 |   |   db.js
+\---lib
+|   \---auth
+|   |   |   api-protect.js
+|   |   |   page-protect.js
 \---models
 |   |   offer.js
 |   |   request.js

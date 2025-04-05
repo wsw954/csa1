@@ -1,7 +1,7 @@
 //app/dealer/dashboard/page.js
 "use client";
 import { useRouter } from "next/navigation";
-import DashboardLayout from "@/components/layouts/DashboardLayout";
+import { signOut } from "next-auth/react";
 import Card from "@/components/ui/Card";
 import Button from "@/components/ui/Button";
 
@@ -9,8 +9,7 @@ export default function DealerDashboard() {
   const router = useRouter();
 
   const handleSignOut = () => {
-    alert("Signing out...");
-    router.push("/auth/login");
+    signOut({ callbackUrl: "/auth/login" }); // ✅ Redirect after sign out
   };
 
   return (

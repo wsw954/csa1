@@ -1,3 +1,8 @@
-﻿export default function Page() {
-  return <div>"app/admin/dashboard/page.js" (Coming Soon)</div>;
+﻿//app/admin/dasboard/page.js
+export default function AdminDashboardPage() {
+  return (
+    <div>
+      <h1>Admin Dashboard</h1>
+    </div>
+  );
 }

@@ -1,13 +1,20 @@
 // app/dealer/layout.js
-"use client";
-import { useSession } from "next-auth/react";
+import { redirect } from "next/navigation";
+import { protectPage } from "@/lib/auth/page-protect";
 
-import DashboardLayout from "@/components/layouts/DashboardLayout";
+export default async function DealerLayout({ children }) {
+  const { session, redirectTo } = await protectPage({ requiredRole: "dealer" });
 
-export default function Layout({ children }) {
-  const { data: session, status } = useSession();
-  if (status === "loading") return <div>Loading...</div>;
-  if (!session) return <p>Access Denied</p>;
+  if (redirectTo) redirect(redirectTo);
 
-  return <DashboardLayout>{children}</DashboardLayout>;
+  return (
+    <div>
+      <header>
+        <h2>Dealer Portal</h2>
+        <p>Logged in as: {session.user.email}</p>
+        <p>Role: {session.user.role}</p>
+      </header>
+      <main>{children}</main>
+    </div>
+  );
 }

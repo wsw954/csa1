@@ -1,4 +1,10 @@
-﻿// /api/request/route.js
+﻿//api/request/route.js
+import { requireAuth } from "@/lib/auth/api-protect";
+import { NextResponse } from "next/server";
+
 export async function POST(req) {
-  return Response.json({ message: "POST /api/request - Create request" });
+  const { status, session, body } = await requireAuth(req);
+  if (status !== 200) return NextResponse.json(body, { status });
+
+  return NextResponse.json({ message: "Request created successfully!" });
 }

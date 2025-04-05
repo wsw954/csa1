@@ -1,6 +1,6 @@
 "use client";
 import { useRouter } from "next/navigation";
-import DashboardLayout from "@/components/layouts/DashboardLayout";
+import { signOut } from "next-auth/react";
 import Button from "@/components/ui/Button";
 import Card from "@/components/ui/Card";
 
@@ -8,8 +8,7 @@ export default function BuyerDashboard() {
   const router = useRouter();
 
   const handleSignOut = () => {
-    alert("Signing out...");
-    router.push("/auth/login");
+    signOut({ callbackUrl: "/auth/login" }); // ✅ Redirect after sign out
   };
 
   return (
