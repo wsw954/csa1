@@ -93,27 +93,60 @@
 |   \---providers
 |   |   |   SessionProvider.js
 |   \---ui
+|   |   |   AuthFormLayout.js
 |   |   |   Button.js
 |   |   |   Card.js
+|   |   |   DashboardButton.js
+|   |   |   FormButton.js
+|   |   |   FormError.js
 |   |   |   FormInput.js
 |   |   |   FormSelect.js
+|   |   |   PasswordInput.js
+|   |   |   RoleSelect.js
+|   \---vehicle
+|   |   \---form
+|   |   |   |   CheckBoxGroup.js
+|   |   |   |   Dropdown.js
+|   |   |   |   FormField.js
+|   |   |   |   FormSection.js
+|   |   |   |   Popup.js
 \---config
 |   |   db.js
+\---features
+|   \---vehicle
+|   |   \---logic
+|   |   |   vehicleSlice.js
 \---lib
 |   \---auth
 |   |   |   api-protect.js
 |   |   |   page-protect.js
+|   \---db
+|   |   optionRules.js
 \---models
 |   |   offer.js
 |   |   request.js
 |   |   user.js
 |   |   vehicle.js
+\---oemData
+|   \---honda
+|   |   |   accord.js
+|   |   |   civic.js
+|   |   |   ridgeline.js
+|   \---toyota
+|   |   |   camry.js
+|   |   |   corolla.js
+|   |   |   supra.js
+|   |   makeModelData.js
 \---public
 |   |   file.svg
 |   |   globe.svg
 |   |   next.svg
 |   |   vercel.svg
 |   |   window.svg
+\---store
+|   |   store.js
+\---styles
+|   |   form.css
 |   .env.local
 |   .gitignore
 |   eslint.config.mjs
