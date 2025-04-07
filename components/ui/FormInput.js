@@ -1,22 +1,26 @@
-// components/ui/FormInput.js
+import React from "react";
+
 export default function FormInput({
   label,
   name,
   type = "text",
   value,
   onChange,
-  required,
+  required = false,
+  autoComplete = "off",
 }) {
   return (
-    <div className="flex flex-col">
-      <label className="text-sm font-medium mb-1">{label}</label>
+    <div className="mb-4">
+      {label && <label className="block font-medium mb-1" htmlFor={name}>{label}</label>}
       <input
-        type={type}
+        id={name}
         name={name}
+        type={type}
         value={value}
         onChange={onChange}
         required={required}
-        className="p-2 border rounded"
+        autoComplete={autoComplete}
+        className="w-full border px-3 py-2 rounded-md shadow-sm focus:outline-none focus:ring"
       />
     </div>
   );

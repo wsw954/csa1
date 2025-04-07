@@ -1,13 +1,18 @@
-//app/auth/signup/page.js
+// /app/auth/signup/page.js
 "use client";
 import { useState } from "react";
 import { useRouter } from "next/navigation";
+import { signIn, getSession } from "next-auth/react";
+
+import AuthFormLayout from "@/components/ui/AuthFormLayout";
 import FormInput from "@/components/ui/FormInput";
-import FormSelect from "@/components/ui/FormSelect";
-import Button from "@/components/ui/Button";
-import Card from "@/components/ui/Card";
+import PasswordInput from "@/components/ui/PasswordInput";
+import FormButton from "@/components/ui/FormButton";
+import FormError from "@/components/ui/FormError";
+import RoleSelect from "@/components/ui/RoleSelect";
 
 export default function SignupPage() {
+  const router = useRouter();
   const [form, setForm] = useState({
     email: "",
     password: "",
@@ -18,9 +23,9 @@ export default function SignupPage() {
     phone: "",
     dealershipAddress: "",
     brands: "",
+    creditScore: "",
   });
-
-  const router = useRouter();
+  const [error, setError] = useState("");
 
   const handleChange = (e) => {
     setForm({ ...form, [e.target.name]: e.target.value });
@@ -28,6 +33,8 @@ export default function SignupPage() {
 
   const handleSubmit = async (e) => {
     e.preventDefault();
+    setError("");
+
     const payload = { ...form };
 
     if (payload.role === "dealer") {
@@ -43,124 +50,123 @@ export default function SignupPage() {
     const data = await res.json();
 
     if (res.ok) {
-      alert(data.message);
-      router.push(
-        payload.role === "buyer" ? "/buyer/dashboard" : "/dealer/dashboard"
-      );
+      // Auto sign in user after registration
+      const loginResult = await signIn("credentials", {
+        redirect: false,
+        email: form.email,
+        password: form.password,
+      });
+
+      if (loginResult?.ok) {
+        const session = await getSession();
+        const role = session?.user?.role;
+
+        if (role === "buyer") {
+          router.push("/buyer/dashboard");
+        } else if (role === "dealer") {
+          router.push("/dealer/dashboard");
+        } else if (role === "admin") {
+          router.push("/admin/dashboard");
+        } else {
+          router.push("/");
+        }
+      } else {
+        alert("Registered, but login failed. Please log in manually.");
+        router.push("/auth/login");
+      }
     } else {
-      alert(data.message);
+      setError(data.message || "Registration failed");
     }
   };
 
   return (
-    <div className="flex flex-col items-center justify-center min-h-screen bg-gray-100">
-      <Card>
-        <h2 className="text-2xl font-bold text-center mb-6">Sign Up</h2>
+    <AuthFormLayout title="Sign Up">
+      <FormError message={error} />
+      <form onSubmit={handleSubmit} className="space-y-4">
+        <RoleSelect value={form.role} onChange={handleChange} />
 
-        <form onSubmit={handleSubmit} className="space-y-4">
-          <FormSelect
-            label="Role"
-            name="role"
-            value={form.role}
-            onChange={handleChange}
-            options={[
-              { label: "Select role...", value: "" },
-              { label: "Buyer", value: "buyer" },
-              { label: "Dealer", value: "dealer" },
-            ]}
-            required
-          />
+        {form.role && (
+          <>
+            <FormInput
+              label="First Name"
+              name="firstName"
+              value={form.firstName}
+              onChange={handleChange}
+              required
+            />
+            <FormInput
+              label="Last Name"
+              name="lastName"
+              value={form.lastName}
+              onChange={handleChange}
+              required
+            />
+            <FormInput
+              label="Email"
+              name="email"
+              type="email"
+              value={form.email}
+              onChange={handleChange}
+              required
+              autoComplete="email"
+            />
+            <PasswordInput
+              value={form.password}
+              onChange={handleChange}
+              name="password"
+            />
+            <FormInput
+              label="Phone"
+              name="phone"
+              value={form.phone}
+              onChange={handleChange}
+              required
+            />
 
-          {form.role && (
-            <>
-              <h3 className="text-lg font-semibold text-center">
-                Create {form.role === "buyer" ? "Buyer" : "Dealer"} Account
-              </h3>
+            {form.role === "buyer" && (
+              <>
+                <FormInput
+                  label="Address"
+                  name="address"
+                  value={form.address}
+                  onChange={handleChange}
+                  required
+                />
+                <FormInput
+                  label="Credit Score (optional)"
+                  name="creditScore"
+                  type="number"
+                  value={form.creditScore}
+                  onChange={handleChange}
+                  min="300"
+                  max="850"
+                />
+              </>
+            )}
 
-              <FormInput
-                label="Email"
-                name="email"
-                type="email"
-                value={form.email}
-                onChange={handleChange}
-                required
-              />
-              <FormInput
-                label="Password"
-                name="password"
-                type="password"
-                value={form.password}
-                onChange={handleChange}
-                required
-              />
+            {form.role === "dealer" && (
+              <>
+                <FormInput
+                  label="Dealership Address"
+                  name="dealershipAddress"
+                  value={form.dealershipAddress}
+                  onChange={handleChange}
+                  required
+                />
+                <FormInput
+                  label="Brands (comma-separated)"
+                  name="brands"
+                  value={form.brands}
+                  onChange={handleChange}
+                  required
+                />
+              </>
+            )}
 
-              <FormInput
-                label="First Name"
-                name="firstName"
-                value={form.firstName}
-                onChange={handleChange}
-                required
-              />
-              <FormInput
-                label="Last Name"
-                name="lastName"
-                value={form.lastName}
-                onChange={handleChange}
-                required
-              />
-              <FormInput
-                label="Phone"
-                name="phone"
-                value={form.phone}
-                onChange={handleChange}
-                required
-              />
-
-              {form.role === "buyer" && (
-                <>
-                  <FormInput
-                    label="Address"
-                    name="address"
-                    value={form.address}
-                    onChange={handleChange}
-                    required
-                  />
-                  <FormInput
-                    label="Credit Score (optional)"
-                    name="creditScore"
-                    type="number"
-                    value={form.creditScore || ""}
-                    onChange={handleChange}
-                    min="300"
-                    max="850"
-                  />
-                </>
-              )}
-
-              {form.role === "dealer" && (
-                <>
-                  <FormInput
-                    label="Dealership Address"
-                    name="dealershipAddress"
-                    value={form.dealershipAddress}
-                    onChange={handleChange}
-                    required
-                  />
-                  <FormInput
-                    label="Brands (comma-separated)"
-                    name="brands"
-                    value={form.brands}
-                    onChange={handleChange}
-                    required
-                  />
-                </>
-              )}
-
-              <Button type="submit">Register</Button>
-            </>
-          )}
-        </form>
-      </Card>
-    </div>
+            <FormButton type="submit">Register</FormButton>
+          </>
+        )}
+      </form>
+    </AuthFormLayout>
   );
 }

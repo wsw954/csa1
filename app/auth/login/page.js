@@ -1,8 +1,14 @@
 //app/auth/login/page.js
 "use client";
-import { signIn } from "next-auth/react";
+import { signIn, getSession } from "next-auth/react";
 import { useState } from "react";
 import { useRouter } from "next/navigation";
+
+import AuthFormLayout from "@/components/ui/AuthFormLayout";
+import FormInput from "@/components/ui/FormInput";
+import FormError from "@/components/ui/FormError";
+import PasswordInput from "@/components/ui/PasswordInput";
+import FormButton from "@/components/ui/FormButton";
 
 export default function LoginPage() {
   const router = useRouter();
@@ -20,43 +26,41 @@ export default function LoginPage() {
       password,
     });
 
-    if (result?.error) {
-      setError(result.error);
-      return;
-    }
+    if (result?.ok) {
+      const session = await getSession();
+      const role = session?.user?.role;
 
-    // Redirect user based on role
-    const userRole = result.role || "buyer"; // Default to buyer if no role exists
-    if (userRole === "buyer") {
-      router.push("/buyer/dashboard");
-    } else if (userRole === "dealer") {
-      router.push("/dealer/dashboard");
-    } else {
-      router.push("/");
+      if (role === "dealer") {
+        router.push("/dealer/dashboard");
+      } else if (role === "buyer") {
+        router.push("/buyer/dashboard");
+      } else if (role === "admin") {
+        router.push("/admin/dashboard");
+      } else {
+        router.push("/");
+      }
     }
   };
 
   return (
-    <div>
-      <h2>Login</h2>
-      {error && <p style={{ color: "red" }}>{error}</p>}
-      <form onSubmit={handleSubmit}>
-        <input
+    <AuthFormLayout title="Login">
+      <FormError message={error} />
+      <form onSubmit={handleSubmit} className="space-y-4">
+        <FormInput
+          label="Email"
+          name="email"
           type="email"
-          placeholder="Email"
           value={email}
           onChange={(e) => setEmail(e.target.value)}
           required
+          autoComplete="username"
         />
-        <input
-          type="password"
-          placeholder="Password"
+        <PasswordInput
           value={password}
           onChange={(e) => setPassword(e.target.value)}
-          required
         />
-        <button type="submit">Login</button>
+        <FormButton type="submit">Login</FormButton>
       </form>
-    </div>
+    </AuthFormLayout>
   );
 }

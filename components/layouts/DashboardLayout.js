@@ -1,23 +1,13 @@
 // components/layouts/DashboardLayout.js
-import { useSession } from "next-auth/react";
-
-export default function DashboardLayout({ children }) {
-  const { data: session, status } = useSession();
-  const userName = session?.user?.name || session?.user?.email || "User";
-
+export default function DashboardLayout({ title, children }) {
   return (
-    <div className="min-h-screen bg-gray-100 flex flex-col">
-      {/* Top Nav */}
-      <header className="bg-white shadow p-4 flex justify-between items-center">
-        <h1 className="text-xl font-bold text-gray-800">CSA1</h1>
-        <div className="space-x-4"></div>
-        <div className="text-sm text-gray-700">
-          {status === "loading" ? "Loading..." : `Welcome, ${userName}`}
+    <div className="p-4">
+      <div className="max-w-xl mx-auto">
+        <div className="bg-white rounded-lg shadow-md p-6">
+          <h1 className="text-2xl font-bold text-center mb-6">{title}</h1>
+          <div className="space-y-4">{children}</div>
         </div>
-      </header>
-
-      {/* Main Content */}
-      <main className="flex-grow p-6">{children}</main>
+      </div>
     </div>
   );
 }

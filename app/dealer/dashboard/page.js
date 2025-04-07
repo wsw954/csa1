@@ -2,48 +2,41 @@
 "use client";
 import { useRouter } from "next/navigation";
 import { signOut } from "next-auth/react";
-import Card from "@/components/ui/Card";
-import Button from "@/components/ui/Button";
+
+import DashboardLayout from "@/components/layouts/DashboardLayout";
+import DashboardButton from "@/components/ui/DashboardButton";
 
 export default function DealerDashboard() {
   const router = useRouter();
 
   const handleSignOut = () => {
-    signOut({ callbackUrl: "/auth/login" }); // ✅ Redirect after sign out
+    signOut({ callbackUrl: "/auth/login" });
   };
 
   return (
-    <DashboardLayout>
-      <Card>
-        <h1 className="text-2xl font-bold text-center mb-6">
-          Dealer Dashboard
-        </h1>
+    <DashboardLayout title="Dealer Dashboard">
+      <DashboardButton onClick={() => router.push("/vehicle/new")}>
+        Add Vehicle to Inventory
+      </DashboardButton>
 
-        <div className="space-y-4">
-          <Button onClick={() => router.push("/dealer/requests")}>
-            View Buyer Requests
-          </Button>
+      <DashboardButton onClick={() => router.push("/request/page")}>
+        View Buyer Requests
+      </DashboardButton>
 
-          <Button onClick={() => router.push("/dealer/offers")}>
-            View Your Offers
-          </Button>
+      <DashboardButton onClick={() => router.push("/offer/page")}>
+        Manage Offers
+      </DashboardButton>
 
-          <Button onClick={() => router.push("/dealer/vehicles")}>
-            Manage Vehicles
-          </Button>
+      <DashboardButton onClick={() => router.push("/dealer/profile")}>
+        Profile & Settings
+      </DashboardButton>
 
-          <Button onClick={() => router.push("/dealer/settings")}>
-            Settings
-          </Button>
-
-          <Button
-            onClick={handleSignOut}
-            className="bg-red-600 hover:bg-red-700"
-          >
-            Sign Out
-          </Button>
-        </div>
-      </Card>
+      <DashboardButton
+        onClick={handleSignOut}
+        className="bg-red-600 hover:bg-red-700"
+      >
+        Sign Out
+      </DashboardButton>
     </DashboardLayout>
   );
 }

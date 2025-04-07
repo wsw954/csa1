@@ -1,49 +1,42 @@
+// /app/buyer/dashboard/page.js
 "use client";
 import { useRouter } from "next/navigation";
 import { signOut } from "next-auth/react";
-import Button from "@/components/ui/Button";
-import Card from "@/components/ui/Card";
+
+import DashboardLayout from "@/components/layouts/DashboardLayout";
+import DashboardButton from "@/components/ui/DashboardButton";
 
 export default function BuyerDashboard() {
   const router = useRouter();
 
   const handleSignOut = () => {
-    signOut({ callbackUrl: "/auth/login" }); // ✅ Redirect after sign out
+    signOut({ callbackUrl: "/auth/login" });
   };
 
   return (
-    <Card>
-      <h1 className="text-2xl font-bold text-center mb-6">Buyer Dashboard</h1>
+    <DashboardLayout title="Buyer Dashboard">
+      <DashboardButton onClick={() => router.push("/vehicle/new")}>
+        Build a Vehicle
+      </DashboardButton>
 
-      <div className="space-y-4">
-        <Button onClick={() => router.push("/buyer/vehicles")}>
-          View Vehicles
-        </Button>
+      <DashboardButton onClick={() => router.push("/request/page")}>
+        View Requests
+      </DashboardButton>
 
-        <Button onClick={() => router.push("/buyer/requests")}>
-          View Requests
-        </Button>
+      <DashboardButton onClick={() => router.push("/offer/page")}>
+        View Offers
+      </DashboardButton>
 
-        <Button onClick={() => router.push("/buyer/offers")}>
-          View Offers
-        </Button>
+      <DashboardButton onClick={() => router.push("/buyer/profile")}>
+        Settings
+      </DashboardButton>
 
-        <Button
-          onClick={() => router.push("/buyer/settings")}
-          // Custom classes if needed for different colors
-          // But let's keep it simple for now
-        >
-          Settings
-        </Button>
-
-        <Button
-          onClick={handleSignOut}
-          type="button"
-          className="bg-red-600 hover:bg-red-700"
-        >
-          Sign Out
-        </Button>
-      </div>
-    </Card>
+      <DashboardButton
+        onClick={handleSignOut}
+        className="bg-red-600 hover:bg-red-700"
+      >
+        Sign Out
+      </DashboardButton>
+    </DashboardLayout>
   );
 }
